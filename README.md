@@ -15,17 +15,41 @@ Clinicians often review multiple sources of patient information before assessing
 
 This project explores how machine learning can assist clinicians by predicting systolic blood pressure using routinely collected patient information while providing clinically meaningful explanations for every prediction.
 
-## Project Objective
+## Business Objective
 
-Version 1 aims to:
+Develop an Intelligent Blood Pressure Risk Assessment System that assists physicians by reducing chart review time and providing clinically interpretable predictions using routinely collected patient information.
 
-- Predict systolic blood pressure (regression)
+The system is intended to support—not replace—physician decision-making, allowing clinicians to spend more time on direct patient care.
 
-- Support future hypertension classification
+## Version 1 Scope
 
-- Produce clinically interpretable predictions
+Version 1 is a technical feasibility study, not the final product. Its purpose is to validate whether routinely collected patient information can accurately predict average systolic blood pressure (SBP).
 
-- Serve as a physician decision-support tool
+This establishes confidence in the data pipeline, feature selection, and modeling approach before expanding to hypertension risk assessment and broader clinical decision support.
+
+## Why SBP as the Initial Target?
+
+SBP was selected because:
+
+- It is a continuous physiological measurement that provides a strong foundation for future risk-assessment models.
+- The required features are routinely collected during standard patient intake, minimizing additional cost and workflow changes.
+- Successfully predicting SBP demonstrates that the available clinical information contains sufficient predictive signal before introducing more complex clinical outcomes.
+
+## Long-Term Roadmap
+
+- **Version 1:** Predict average SBP using routinely collected clinical data.
+- **Version 2:** Expand to hypertension risk stratification, such as Normal, Elevated, Stage 1, and Stage 2.
+- **Version 3:** Generate physician-facing clinical summaries and explanations to support decision-making and reduce chart-review time.
+
+## Design Review Status
+
+**Business Problem:** Approved
+
+### Reviewer Notes
+
+- The project addresses a meaningful clinical workflow problem rather than pursuing machine learning for its own sake.
+- Version 1 is appropriately positioned as a validation milestone for the larger system.
+- The business and scientific justifications for selecting SBP as the initial target are clearly established.
 
 ## Current Status
 
