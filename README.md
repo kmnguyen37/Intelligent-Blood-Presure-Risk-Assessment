@@ -53,25 +53,7 @@ Current Phase
 
 ## Project Roadmap
 
-Business
-↓
-Domain Research
-↓
-Dataset Selection
-↓
-Data Preparation
-↓
-EDA
-↓
-Feature Engineering
-↓
-Modeling
-↓
-Evaluation
-↓
-Interpretability
-↓
-AI Assistant
+Business -> Domain Research -> Dataset Selection -> Data Preparation -> EDA -> Feature Engineering -> Modeling -> Evaluation -> Interpretability -> AI Assistant
 
 ## Project Structure
 
