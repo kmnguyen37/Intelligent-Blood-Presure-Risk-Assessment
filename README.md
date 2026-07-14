@@ -85,6 +85,33 @@ docs/
 
 README.md
 
+## Project Workflow
+
+NHANES Files
+        │
+        ▼
+Raw Data
+(data/raw)
+        │
+        ▼
+Load into pandas
+        │
+        ▼
+Working Dataset
+(model_v1_df)
+        │
+Feature Engineering
+Data Cleaning
+EDA
+Validation
+        │
+        ▼
+Training Dataset
+(model_training_df)
+        │
+        ▼
+Machine Learning
+
 ## Author
 Iris Johnson
 An end-to-end healthcare data science project for predicting systolic blood pressure, classifying hypertension risk, and explaining model predictions using NHANES data.
