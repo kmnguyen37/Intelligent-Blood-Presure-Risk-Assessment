@@ -89,7 +89,7 @@ This project emphasizes reproducibility and decision traceability through struct
 
 ✅ Data Preparation
 
-🟨 Exploratory Data Analysis (In Progress)
+✅ Exploratory Data Analysis (In Progress)
 
 ⬜ Modeling
 
