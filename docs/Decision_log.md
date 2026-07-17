@@ -162,7 +162,7 @@ Version 1 remains simple, practical, and deployable.
 
 DATA ENGINEER DECISIONS
 
-DS001 — Preserve Raw Data Throughout the Pipeline
+DE001 — Preserve Raw Data Throughout the Pipeline
 
 Status: Approved
 
@@ -181,7 +181,7 @@ Rationale
 
 ⸻
 
-DS002 — Create Version-Specific Working DataFrames
+DE002 — Create Version-Specific Working DataFrames
 
 Status: Approved
 
@@ -205,7 +205,7 @@ Benefits:
 
 ⸻
 
-DS003 — Merge Strategy
+DE003 — Merge Strategy
 
 Status: Approved
 
@@ -222,7 +222,7 @@ Rationale
 
 ⸻
 
-DS004 — Validate Merge Integrity
+DE004 — Validate Merge Integrity
 
 Status: Approved
 
@@ -240,7 +240,7 @@ Rationale
 
 ⸻
 
-DS005 — Configuration Separate from Logic
+DE005 — Configuration Separate from Logic
 
 Status: Approved
 
@@ -253,6 +253,49 @@ Rationale
 Separating configuration from logic makes the pipeline easier to maintain.
 
 Adding new datasets should require modifying only the configuration rather than the download code.
+
+⸻
+
+DE006 — Exclusion of Ages 0–7 from the Training Dataset
+
+Status: Approved
+
+Decision
+
+Participants aged 0–7 years will be excluded from the training dataset because no valid systolic blood pressure target values are available within this age range.
+
+Rationale
+
+* Exploratory Data Analysis showed that participants aged 0–7 have 0% availability for Average_SBP.
+* A supervised learning model requires observed target values for training.
+* Retaining these participants would introduce rows with universally missing targets without contributing useful information to model development.
+* This exclusion is based on data availability, not on clinical assumptions regarding pediatric hypertension.
+
+Scope: This decision applies to the training dataset. The working dataset will continue to retain all participants to preserve the original NHANES data and support future analyses.
+
+Notebook: EDA 4 - Blood Pressure Measurement Availability by Age
+
+⸻
+
+DE007 — Remove Observations with Missing Target Values
+
+Status: Approved
+
+Decision
+
+Remove all observations with missing Average_SBP from the training dataset.
+
+Rationale
+
+* Supervised regression requires a known target value for every training observation.
+* Observations without Average_SBP cannot contribute to model learning because the true outcome is unknown.
+* These observations will remain in the working dataset for future analyses but will not be included in model training.
+
+⸻
+
+DE008 - Retain the existing training dataset for BP medication analysis.
+
+Rationale: Although the BP medication variable appears to have a high proportion of missing values when considering the full training dataset, this is primarily due to the NHANES survey design, where the question is only asked of participants aged 16 years and older. Furthermore, preprocessing retained participants reporting BP medication use and non-use at nearly identical rates (83.1% vs. 81.7%), and the overall category distributions remained essentially unchanged (27.3% vs. 27.4% for “Yes”; 4.83% vs. 4.77% for “No”). There is no evidence that preprocessing materially altered the distribution of this feature.
 
 ⸻
 

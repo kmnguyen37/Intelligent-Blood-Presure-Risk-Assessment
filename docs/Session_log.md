@@ -261,3 +261,22 @@ Key Takeaways
 * Average blood pressure variables have been successfully engineered and validated.
 * EDA shifted from simple descriptive statistics toward hypothesis-driven investigation.
 * The next phase will investigate blood pressure availability across age groups to determine the appropriate modeling population.
+
+NOTES for Jul 17 2026
+
+Features selection is done. Summary is provided in the notebook.
+
+## Potential Modeling Considerations
+
+| Feature | Observation from EDA | What to Check During Modeling |
+|---------|----------------------|-------------------------------|
+| Age | Positive association with Avg SBP. | Verify linearity using residual plots. |
+| Sex | Moderate difference in Avg SBP. | Determine whether it contributes after adjusting for other variables. |
+| BMI | Positive association with Avg SBP. | Check multicollinearity with diabetes and evaluate linearity. |
+| Diabetes | Entire Avg SBP distribution shifted upward. | Assess whether the effect remains after adjusting for age and BMI. |
+| BP Medication | Weak univariate separation but clinically relevant. | Examine coefficient stability and compare models with and without this feature. |
+
+### Notes
+- These are hypotheses to evaluate during modeling, not conclusions.
+- Revisit this table after fitting the baseline regression model.
+- Update or remove concerns based on diagnostic results.

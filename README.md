@@ -1,5 +1,12 @@
 # Intelligent Blood Pressure Risk Assessment System
 
+Project Vision
+Intelligent Blood Pressure Risk Assessment System
+
+Current Implementation (Version 1)
+SBP Prediction Engine
+
+
 This project develops an end-to-end machine learning system that predicts a patient's systolic blood pressure using routinely collected clinical information and provides a clinically meaningful explanation for each prediction.
 
 The system is designed as a clinical decision-support tool to help physicians review patient information more efficiently, allowing them to spend less time on routine data review and more time providing direct patient care.
@@ -35,15 +42,34 @@ SBP was selected because:
 - The required features are routinely collected during standard patient intake, minimizing additional cost and workflow changes.
 - Successfully predicting SBP demonstrates that the available clinical information contains sufficient predictive signal before introducing more complex clinical outcomes.
 
+## Dataset
+
+Source:
+CDC National Health and Nutrition Examination Survey (NHANES)
+
+Cycle:
+2017–March 2020 Pre-Pandemic
+
+Population:
+Participants aged 8 years and older after project-specific preprocessing.
+
+Purpose:
+Routinely collected clinical measurements used to develop the Version 1 SBP prediction model.
+
+## Project Documentation
+
+This project emphasizes reproducibility and decision traceability through structured documentation.
+
+- Decision Log – Records major project decisions and their rationale.
+- Session Log – Summarizes work completed in each development session.
+- Data Dictionary – Describes all variables used in the project.
+- Reference Guide – Contains NHANES variable definitions and coding references.
+
 ## Long-Term Roadmap
 
 - **Version 1:** Predict average SBP using routinely collected clinical data.
 - **Version 2:** Expand to hypertension risk stratification, such as Normal, Elevated, Stage 1, and Stage 2.
 - **Version 3:** Generate physician-facing clinical summaries and explanations to support decision-making and reduce chart-review time.
-
-## Design Review Status
-
-**Business Problem:** Approved
 
 ### Reviewer Notes
 
@@ -53,8 +79,6 @@ SBP was selected because:
 
 ## Current Status
 
-Current Phase
-
 ✅ Business Understanding
 
 ✅ Domain Research
@@ -63,54 +87,45 @@ Current Phase
 
 ✅ Dataset Understanding
 
-✅ Feature Approval
+✅ Data Preparation
 
-⬜ Data Preparation
-
-⬜ Exploratory Data Analysis
+🟨 Exploratory Data Analysis (In Progress)
 
 ⬜ Modeling
 
 ⬜ Evaluation
 
-⬜ AI Clinical Assistant
-
 ## Project Roadmap
 
 Business -> Domain Research -> Dataset Selection -> Data Preparation -> EDA -> Feature Engineering -> Modeling -> Evaluation -> Interpretability -> AI Assistant
 
-## Project Structure
-
-docs/
-
-README.md
-
 ## Project Workflow
 
-NHANES Files
+NHANES Raw Files
         │
         ▼
-Raw Data
-(data/raw)
+Data Validation
         │
         ▼
-Load into pandas
+Data Integration
         │
         ▼
-Working Dataset
-(model_v1_df)
-        │
 Feature Engineering
-Data Cleaning
-EDA
-Validation
         │
         ▼
 Training Dataset
-(model_training_df)
         │
         ▼
-Machine Learning
+Exploratory Data Analysis
+        │
+        ▼
+Baseline Model
+        │
+        ▼
+Model Evaluation
+        │
+        ▼
+Clinical Interpretation
 
 ## Author
 Iris Johnson
