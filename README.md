@@ -89,15 +89,55 @@ This project emphasizes reproducibility and decision traceability through struct
 
 ✅ Data Preparation
 
-✅ Exploratory Data Analysis (In Progress)
+✅ Exploratory Data Analysis
 
-⬜ Modeling
+✅ Statistical Modeling (OLS)
 
-⬜ Evaluation
+✅ Model Diagnostics
+
+✅ Machine Learning Modeling
+
+✅ Model Comparison & Evaluation
+
+⬜ Model Interpretability (SHAP)
+
+⬜ Clinical Decision Support Summary
+
+⬜ Version 2: Hypertension Risk Classification
 
 ## Project Roadmap
 
-Business -> Domain Research -> Dataset Selection -> Data Preparation -> EDA -> Feature Engineering -> Modeling -> Evaluation -> Interpretability -> AI Assistant
+BBusiness Understanding
+        │
+        ▼
+Data Preparation
+        │
+        ▼
+Exploratory Data Analysis
+        │
+        ▼
+Feature Engineering
+        │
+        ▼
+Statistical Modeling (OLS)
+        │
+        ▼
+Model Diagnostics
+        │
+        ▼
+Machine Learning Modeling
+        │
+        ▼
+Model Comparison & Evaluation
+        │
+        ▼
+Model Interpretability
+        │
+        ▼
+Clinical Decision Support
+        │
+        ▼
+AI Assistant Integration
 
 ## Project Workflow
 
@@ -127,6 +167,51 @@ Model Evaluation
         ▼
 Clinical Interpretation
 
+Model Development
+Version 1 evaluates multiple predictive modeling approaches to establish an interpretable and reproducible baseline for systolic blood pressure (SBP) prediction.
+The following models were developed and compared:
+Ordinary Least Squares (OLS) for statistical inference and coefficient interpretation.
+Linear Regression as the baseline machine learning model.
+Decision Tree Regression to capture nonlinear relationships.
+Random Forest Regression to improve predictive performance through bagging.
+XGBoost Regression to evaluate gradient boosting using sequential residual correction.
+Model selection was performed using an 80/20 train-test split and evaluated using:
+R²
+Mean Absolute Error (MAE)
+Root Mean Squared Error (RMSE)
+Hyperparameter tuning was performed experimentally by varying one parameter at a time to understand its impact on model performance rather than relying solely on automated optimization.
+Model diagnostics for the OLS model included:
+Residual vs. Fitted Plot
+Normal Q-Q Plot
+Variance Inflation Factor (VIF)
+Cook's Distance
+These diagnostics were used to verify model assumptions, identify influential observations, and assess multicollinearity before developing machine learning models.
+Model Summary
+Four predictive models were evaluated using the testing dataset.
+Model	Purpose
+Linear Regression	Baseline machine learning model
+Decision Tree	Capture nonlinear relationships
+Random Forest	Ensemble learning through bagging
+XGBoost	Ensemble learning through boosting
+
+
+Key findings include:
+Ensemble methods consistently outperformed Linear Regression.
+Decision Tree improved predictive performance by modeling nonlinear relationships.
+Random Forest achieved the highest testing performance.
+XGBoost produced nearly identical performance to Random Forest, indicating that additional boosting complexity provided minimal benefit for this prediction task.
+
+
+
 ## Author
 Iris Johnson
 An end-to-end healthcare data science project for predicting systolic blood pressure, classifying hypertension risk, and explaining model predictions using NHANES data.
+
+## Key Results
+
+- Developed an end-to-end SBP prediction pipeline using NHANES 2017–2020 data.
+- Compared OLS, Linear Regression, Decision Tree, Random Forest, and XGBoost models.
+- Performed comprehensive statistical diagnostics, including residual analysis, Q-Q plots, VIF, and Cook's Distance.
+- Demonstrated that ensemble methods improved predictive performance over the linear baseline.
+- Found that Random Forest and XGBoost achieved nearly identical testing performance, suggesting limited benefit from additional boosting complexity for this dataset.
+- Established a reproducible modeling workflow to support future hypertension risk classification and physician-facing clinical decision support.
