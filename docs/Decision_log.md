@@ -450,6 +450,82 @@ Future model selection will consider both predictive performance and explainabil
 
 ⸻
 
+M003 – Two-Model Modeling Strategy
+
+Decision: Develop two regression models rather than one.
+
+Primary (Baseline) Model
+
+Purpose
+
+- Maximize sample size.
+- Provide the primary interpretable model for the study population.
+
+Predictors
+
+- Age
+- Sex
+- BMI
+- Diabetes
+
+Sample Size: 10,257 participants
+
+Role: Primary model used for interpretation and reporting.
+
+Selected Model
+
+Purpose
+
+- Evaluate the additional contribution of BP medication status.
+- Assess whether including medication meaningfully improves model performance.
+
+Predictors
+- Age
+- Sex
+- BMI
+- Diabetes
+- BP Medication
+
+Sample Size: 2,681 participants
+
+Role: Sensitivity analysis / secondary model.
+
+⸻
+
+M004 – Reference Categories
+
+Selected reference groups:
+Sex → Male
+Diabetes → No diabetes
+
+Reason: These represent the natural baseline for coefficient interpretation.
+
+⸻
+
+M005 – Diabetes Unknown Responses
+
+Removed participants with "Don't Know" diabetes responses before regression modeling.
+
+Reason:
+- Extremely small sample size.
+- Created singularity issues in the design matrix.
+- Did not provide meaningful clinical interpretation.
+
+⸻
+
+M006 – Baseline Model Selection
+
+The Primary (Baseline) Model will be the principal model presented throughout the project.
+
+Reason:
+
+- Largest available sample.
+- Most representative of the study population.
+- Avoids restricting the analysis because of structurally missing BP medication data.
+- Provides the strongest foundation for interpretation and future machine learning models.
+
+⸻
+
 Engineering Decisions
 
 E001 — Repository Development

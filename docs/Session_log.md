@@ -280,3 +280,72 @@ Features selection is done. Summary is provided in the notebook.
 - These are hypotheses to evaluate during modeling, not conclusions.
 - Revisit this table after fitting the baseline regression model.
 - Update or remove concerns based on diagnostic results.
+
+## Baseline Regression Modeling & Model Diagnostics
+
+Objectives
+
+Build an interpretable multiple linear regression model for Average SBP.
+Compare modeling strategies when BP medication data are structurally missing.
+Evaluate model assumptions using standard regression diagnostics.
+
+Work Completed
+
+1. Modeling Strategy
+
+Identified that BP medication status is unavailable for a large proportion of participants due to survey design.
+Determined that including BP medication reduced the modeling dataset from 10,257 participants to 2,681 participants.
+Decided to develop two complementary regression models instead of forcing a single model.
+
+2. Primary (Baseline) Model
+Built a multiple linear regression model using:Age
+Sex
+BMI
+Diabetes status
+
+Set reference categories:Sex → Male
+Diabetes → No diabetes
+
+Removed "Don't Know" diabetes responses before model fitting.
+Achieved:R² = 0.358
+Adjusted R² = 0.357
+
+Interpretation:Age was the strongest positive predictor.
+Female participants had lower Average SBP than males after adjustment.
+BMI had a statistically significant but modest positive association.
+Diabetes status was not independently associated with Average SBP after adjusting for age, BMI, and sex.
+
+3. Model Diagnostics
+
+Completed and interpreted:
+Residuals vs Fitted
+No substantial nonlinear pattern.
+Mild heteroscedasticity observed.
+Model form considered acceptable.
+Q-Q Plot
+Residuals approximately normal through the center.
+Mild upper-tail deviation.
+Normality assumption considered reasonable for a large sample.
+Variance Inflation Factor (VIF)
+Age: 1.22
+Diabetes: 1.15
+BMI: 1.13
+Borderline Diabetes: 1.02
+Sex: 1.01
+Interpretation:
+Negligible multicollinearity.
+All predictors contribute unique information.
+
+4. Statistical Concepts Reviewed
+Developed conceptual understanding of:
+Dummy variables and reference categories
+Regression coefficient interpretation
+Linearity and homoscedasticity
+Residual normality
+Variance Inflation Factor (VIF)
+Cook's Distance (concept only)
+Next Session
+Compute and interpret Cook's Distance.
+Identify influential observations.
+Decide whether any observations require investigation.
+Build and compare the Selected Model including BP medication.
