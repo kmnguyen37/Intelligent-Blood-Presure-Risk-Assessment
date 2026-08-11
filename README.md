@@ -39,6 +39,8 @@ The Random Forest was selected because it was effectively tied with XGBoost whil
 - Sex contributed a smaller but consistent signal.
 - BMI contributed weak nonlinear information.
 - Diabetes status added almost no incremental predictive value after the other features were known.
+- The largest underprediction was 89.08 mmHg; extreme BMI pulled the prediction downward despite an observed SBP above 210 mmHg.
+- The largest overprediction was 46.01 mmHg; top-coded age of 80 or older dominated the prediction for a participant with unusually low SBP.
 
 These findings describe the fitted model; they are not causal conclusions.
 
@@ -46,7 +48,16 @@ These findings describe the fitted model; they are not causal conclusions.
 
 Aggregate performance hides systematic regression toward the mean. The model overpredicted low SBP and underpredicted high SBP. For participants with observed SBP of 160 mmHg or greater, mean underprediction was approximately 40.75 mmHg. This failure pattern is the main reason the project is presented as a technical benchmark rather than a clinical decision-support system.
 
-Additional limitations include complete-case analysis, omission of relevant clinical and behavioral predictors, failure to incorporate the NHANES complex survey design, age top-coding at 80, and lack of external validation.
+Additional limitations include complete-case analysis, omission of relevant clinical and behavioral predictors, failure to incorporate the NHANES complex survey design, age top-coding at 80, and lack of external validation. Average SBP was calculated from the available readings without a minimum-reading sensitivity analysis, and pediatric and adult populations may require separate models.
+
+## Next steps
+
+- Quantify valid SBP readings and test minimum-reading requirements.
+- Add clinically justified predictors and missing-data handling within a reusable pipeline.
+- Use a new development and validation cycle rather than tuning further against the current test set.
+- Perform temporal and external validation and report uncertainty around performance.
+- Evaluate pediatric and adult populations appropriately.
+- Treat any application as a synthetic, nonclinical demonstration until clinical validation and governance requirements are satisfied.
 
 ## Reproduce the analysis
 

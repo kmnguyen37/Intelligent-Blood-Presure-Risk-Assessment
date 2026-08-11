@@ -13,11 +13,11 @@ The project therefore has two distinct deployment tracks:
 
 ### 1. Finalize the analysis
 
-- Complete SHAP interpretation.
-- Add a consolidated limitations and future-work section.
-- Make the severe high-SBP underprediction prominent.
-- Remove exploratory notebook clutter and duplicate outputs.
-- Restart the kernel and verify a clean top-to-bottom execution.
+- [x] Complete SHAP interpretation.
+- [x] Add a consolidated limitations and future-work section.
+- [x] Make the severe high-SBP underprediction prominent.
+- [x] Preserve the full technical record and create a concise portfolio notebook.
+- [x] Restart the kernel and verify the portfolio notebook from top to bottom.
 
 ### 2. Create a reproducible training pipeline
 
@@ -74,6 +74,7 @@ A potentially more defensible future use case may be identifying people who need
 
 ### 2. Improve the data and model
 
+- Quantify the number of valid SBP readings per participant and test minimum-reading requirements.
 - Add relevant clinical, behavioral, medication, and social predictors.
 - Consider separate pediatric and adult models or clearly defined populations.
 - Validate temporally using another NHANES cycle.
