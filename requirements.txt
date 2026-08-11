@@ -62,7 +62,7 @@ nbformat==5.10.4
 nest-asyncio2==1.7.2
 notebook==7.6.0
 notebook_shim==0.2.4
-numpy==2.5.1
+numpy==2.4.6
 packaging==26.2
 pandas==3.0.3
 pandocfilters==1.5.1
@@ -84,6 +84,9 @@ PyYAML==6.0.3
 pyzmq==27.1.0
 referencing==0.37.0
 requests==2.34.2
+scikit-learn==1.9.0
+shap==0.52.0
+statsmodels==0.14.6
 rfc3339-validator==0.1.4
 rfc3986-validator==0.1.1
 rfc3987-syntax==1.1.0
@@ -105,3 +108,4 @@ webcolors==25.10.0
 webencodings==0.5.1
 websocket-client==1.9.0
 widgetsnbextension==4.0.15
+xgboost==3.4.0
