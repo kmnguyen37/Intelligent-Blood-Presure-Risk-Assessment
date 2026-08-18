@@ -14,15 +14,15 @@ B001 — Project Vision
 
 Decision
 
-Develop an intelligent clinical decision-support system that assists healthcare professionals in assessing blood pressure and hypertension risk using explainable machine learning and AI.
+Evaluate the reliability and clinical error profile of machine-learning estimates of Average Systolic Blood Pressure, with particular attention to performance across observed blood-pressure ranges.
 
 Rationale
 
-The long-term objective is not simply to predict a blood pressure value. The goal is to improve clinical decision making by providing fast, explainable, and evidence-based recommendations while preserving physician oversight.
+The immediate objective is not simply to produce an SBP estimate. It is to determine whether apparently acceptable aggregate performance conceals clinically important failures, especially systematic underprediction at high SBP. Explainability is used to investigate model behavior, not to imply clinical validity.
 
 Impact
 
-Every future version of this project should contribute toward this vision.
+Every future version should report range-specific error, uncertainty, subgroup performance, and explicit evidence for or against clinical readiness.
 
 ⸻
 
@@ -30,7 +30,7 @@ B002 — Intended Users
 
 Decision
 
-Design the system as a physician decision-support tool rather than an autonomous diagnostic system.
+Treat Version 1 as a nonclinical model-reliability benchmark. Do not position it as a physician decision-support or autonomous diagnostic system.
 
 Options Considered
 
@@ -39,11 +39,11 @@ Options Considered
 
 Rationale
 
-Medical decisions require physician judgment. The AI system should support clinicians by providing predictions and explanations, while the physician remains responsible for final clinical decisions.
+The observed high-SBP underprediction and large individual errors make clinical use unsafe without a revised use case, stronger data, uncertainty estimates, external and prospective validation, and governance. Human oversight alone does not validate an unreliable estimate.
 
 Impact
 
-Explainability becomes a primary project requirement.
+Range-specific error analysis is the primary evaluation requirement; explainability supports investigation of the observed failures.
 
 ⸻
 
@@ -51,11 +51,11 @@ B003 — Version 1 Scope
 
 Decision
 
-Version 1 will focus exclusively on predicting Average Systolic Blood Pressure.
+Version 1 evaluates how reliably machine-learning models estimate Average Systolic Blood Pressure across observed blood-pressure ranges.
 
 Rationale
 
-Beginning with a single regression target reduces project complexity while establishing a strong technical and clinical foundation.
+A single regression target permits detailed evaluation of directional bias, error magnitude, subgroup behavior, and extreme failures without changing the existing analytical scope.
 
 Future Direction
 

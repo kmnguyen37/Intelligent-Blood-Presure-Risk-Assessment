@@ -1,3 +1,7 @@
+# Supplemental Model-Selection Code
+
+These exploratory snippets compare model complexity and generalization during development. They support selection of an estimator for the reliability study; they do not replace the held-out, range-specific error analysis used to answer the primary research question.
+
 ## Visualizing the bias-variance tradeoff for Decision Tree Regressor (with testing set)
 
 plt.figure(figsize=(6, 4))

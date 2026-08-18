@@ -349,3 +349,31 @@ Compute and interpret Cook's Distance.
 Identify influential observations.
 Decide whether any observations require investigation.
 Build and compare the Selected Model including BP medication.
+
+⸻
+
+Session — Research Question Reframing
+
+Date: August 18, 2026
+
+Session Objective
+
+Reframe Project 1 around the primary question: “How reliable are machine-learning estimates of systolic blood pressure across clinically important blood-pressure ranges?”
+
+Work Completed
+
+* Preserved the original notebooks and created clearly named reliability-focused copies.
+* Retained the existing cohort, analyses, data, model results, and conclusions.
+* Reorganized the narrative so range-specific error analysis—not aggregate prediction performance—is the central evidence.
+* Reframed SHAP as an explanation of model reliance and failure mechanisms.
+* Made the nondeployment recommendation explicit and tied it to severe high-SBP underprediction.
+* Updated repository documentation to use consistent model-reliability language.
+
+Key Result
+
+The final Random Forest achieved held-out R² of 0.372, MAE of 11.18 mmHg, and RMSE of 15.35 mmHg, but reliability deteriorated sharply across the outcome range. For observed Average SBP of 160 mmHg or greater, every estimate was too low and mean underprediction was 40.75 mmHg.
+
+Current Positioning
+
+Version 1 is a transparent, nonclinical model-reliability benchmark. It is not validated for diagnosis, treatment, triage, risk communication, or patient-care decisions.
+

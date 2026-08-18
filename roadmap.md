@@ -1,6 +1,8 @@
-# Deployment Roadmap
+# Reliability Findings and Deployment Roadmap
 
-## Current Readiness Decision
+## Research Finding and Current Readiness Decision
+
+The primary research question asks how reliable machine-learning SBP estimates are across clinically important blood-pressure ranges. The answer is that reliability deteriorates sharply away from the center of the observed distribution, with the most consequential failure at high SBP.
 
 The current Random Forest should not be deployed for clinical use. It systematically underpredicts very high SBP, including an average underprediction of approximately 40.75 mmHg among test participants with observed Average SBP of 160 mmHg or greater. Packaging the model as an application would make the software accessible, but it would not make the model clinically safe or validated.
 
@@ -11,11 +13,11 @@ The project therefore has two distinct deployment tracks:
 
 ## Track 1: Portfolio-Demo Deployment
 
-### 1. Finalize the analysis
+### 1. Finalize and communicate the reliability analysis
 
 - [x] Complete SHAP interpretation.
 - [x] Add a consolidated limitations and future-work section.
-- [x] Make the severe high-SBP underprediction prominent.
+- [x] Make range-specific reliability and severe high-SBP underprediction the organizing findings.
 - [x] Preserve the full technical record and create a concise portfolio notebook.
 - [x] Restart the kernel and verify the portfolio notebook from top to bottom.
 
@@ -119,7 +121,7 @@ Regulatory status depends on intended use and whether clinicians can independent
 ## Recommended October Positioning
 
 - Deploy a nonclinical demonstration.
-- Present the current Random Forest as a technical feasibility benchmark.
+- Present the current Random Forest as a model-reliability benchmark whose aggregate score conceals clinically important range-specific failures.
 - Make the failure analysis visible rather than hiding it.
 - Describe the additional work required for a production clinical system.
 - Do not imply clinical readiness, diagnostic capability, or treatment utility.

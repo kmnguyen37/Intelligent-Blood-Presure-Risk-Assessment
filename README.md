@@ -1,26 +1,32 @@
-# Intelligent Blood Pressure Risk Assessment
+# Machine-Learning SBP Reliability Across Blood-Pressure Ranges
 
-An end-to-end data science feasibility study using NHANES 2017–March 2020 data to predict average systolic blood pressure (SBP) from age, sex, BMI, and diabetes status.
+An end-to-end model-reliability and clinical error-profile study using NHANES 2017–March 2020 data.
 
-> **Bottom line:** the final Random Forest captured meaningful population-level signal, but its errors at clinically important SBP extremes make it unsuitable for clinical use.
+> **Research question:** How reliable are machine-learning estimates of systolic blood pressure across clinically important blood-pressure ranges?
+
+> **Bottom line:** reliability is not uniform. The final Random Forest performed best near the center of the observed SBP distribution but systematically overpredicted low SBP and underpredicted high SBP. Among test participants with observed SBP of 160 mmHg or greater, every estimate was too low and mean underprediction was approximately 40.75 mmHg. The model is not suitable for clinical use.
 
 ## Start here
 
-- **[Portfolio notebook](notebook/02-portfolio-notebook.ipynb):** concise, decision-focused analysis for reviewers
-- **[Full technical notebook](notebook/01-project-notebook.ipynb):** expanded EDA, statistical diagnostics, tuning, and error analysis
-- **[Deployment roadmap](roadmap.md):** steps required to move beyond the feasibility benchmark
+- **[Portfolio notebook](notebook/02-portfolio-notebook-reframed-reliability.ipynb):** concise, hiring-manager-friendly reliability study
+- **[Full technical notebook](notebook/01-project-notebook-reframed-reliability.ipynb):** expanded EDA, statistical diagnostics, tuning, range-specific error analysis, and SHAP failure investigation
+- **[Deployment roadmap](roadmap.md):** implications of the reliability findings and requirements beyond this benchmark
 
-## Problem
+The original notebooks remain unchanged as a record of the earlier project framing.
 
-Version 1 asks a deliberately narrow question: do a small set of routinely collected predictors contain enough signal to estimate average SBP?
+## Study design
 
 - **Population:** NHANES participants aged 8 years or older with measured SBP
 - **Target:** average of up to three oscillometric SBP readings
 - **Predictors:** age, sex, BMI, and diabetes status
 - **Analytical cohort:** 10,257 participants with complete modeling data
-- **Validation:** 80/20 train-test split with five-fold cross-validation performed only within the training set
+- **Validation:** 80/20 train-test split with five-fold cross-validation only within the training set
+- **Overall metrics:** R², MAE, and RMSE
+- **Primary reliability evidence:** error direction and magnitude across observed SBP ranges, supplemented by subgroup and extreme-case analysis
 
-## Results
+The SBP ranges are descriptive bins for evaluating model error; they are not presented as diagnostic categories.
+
+## Model comparison
 
 | Model | Mean CV R² | CV MAE | CV RMSE |
 |---|---:|---:|---:|
@@ -29,35 +35,36 @@ Version 1 asks a deliberately narrow question: do a small set of routinely colle
 | Random Forest | 0.378 | 11.24 | 15.22 |
 | XGBoost | 0.378 | 11.24 | 15.22 |
 
-The Random Forest was selected because it was effectively tied with XGBoost while requiring fewer tuning decisions.
+Random Forest was selected because it was effectively tied with XGBoost while requiring fewer tuning decisions. Its held-out performance was R² = 0.372, MAE = 11.18 mmHg, and RMSE = 15.35 mmHg. The modest improvement over linear regression indicates that the central reliability limitation is not solved by choosing a more complex tested algorithm.
 
-**Held-out Random Forest performance:** R² = 0.372, MAE = 11.18 mmHg, RMSE = 15.35 mmHg.
+## Reliability across observed SBP ranges
 
-## What the model learned
+| Observed SBP range | Participants | Mean residual | MAE | RMSE |
+|---|---:|---:|---:|---:|
+| <100 | 249 | −13.25 | 13.27 | 16.72 |
+| 100–119 | 945 | −6.35 | 9.09 | 11.94 |
+| 120–139 | 564 | 3.21 | 7.16 | 9.02 |
+| 140–159 | 213 | 17.35 | 17.43 | 19.20 |
+| 160+ | 81 | 40.75 | 40.75 | 43.67 |
 
-- Age dominated predictive behavior across SHAP and permutation importance.
-- Sex contributed a smaller but consistent signal.
-- BMI contributed weak nonlinear information.
-- Diabetes status added almost no incremental predictive value after the other features were known.
-- The largest underprediction was 89.08 mmHg; extreme BMI pulled the prediction downward despite an observed SBP above 210 mmHg.
-- The largest overprediction was 46.01 mmHg; top-coded age of 80 or older dominated the prediction for a participant with unusually low SBP.
+Residual is defined as actual minus predicted SBP. Negative values indicate overprediction; positive values indicate underprediction. Near-zero aggregate bias conceals systematic regression toward the mean and severe underprediction at the high end.
 
-These findings describe the fitted model; they are not causal conclusions.
+## Why the model fails
 
-## Most important limitation
+- Age dominates predictive behavior across SHAP and permutation importance.
+- Sex contributes a smaller but consistent signal.
+- BMI contributes weak nonlinear information and behaves unstably in sparsely represented extremes.
+- Diabetes status adds almost no incremental predictive value after the other features are known.
+- The limited feature set cannot distinguish people whose SBP is unusually high or low for their demographic profile.
+- The largest underprediction was 89.08 mmHg; the largest overprediction was 46.01 mmHg.
 
-Aggregate performance hides systematic regression toward the mean. The model overpredicted low SBP and underpredicted high SBP. For participants with observed SBP of 160 mmHg or greater, mean underprediction was approximately 40.75 mmHg. This failure pattern is the main reason the project is presented as a technical benchmark rather than a clinical decision-support system.
+These findings explain the fitted model; they are not causal conclusions.
 
-Additional limitations include complete-case analysis, omission of relevant clinical and behavioral predictors, failure to incorporate the NHANES complex survey design, age top-coding at 80, and lack of external validation. Average SBP was calculated from the available readings without a minimum-reading sensitivity analysis, and pediatric and adult populations may require separate models.
+## Deployment recommendation
 
-## Next steps
+Do not deploy this model for diagnosis, treatment, triage, risk communication, or patient-care decisions. Direct BP measurement remains preferable whenever available. The current model is appropriate only as a transparent, nonclinical benchmark or a clearly labeled educational demonstration using synthetic inputs.
 
-- Quantify valid SBP readings and test minimum-reading requirements.
-- Add clinically justified predictors and missing-data handling within a reusable pipeline.
-- Use a new development and validation cycle rather than tuning further against the current test set.
-- Perform temporal and external validation and report uncertainty around performance.
-- Evaluate pediatric and adult populations appropriately.
-- Treat any application as a synthetic, nonclinical demonstration until clinical validation and governance requirements are satisfied.
+Further clinical development would require stronger predictors, target-sensitivity analysis, uncertainty estimates, a new validation cycle, temporal and external validation, prospective evaluation, explicit high-SBP safety criteria, and clinical governance.
 
 ## Reproduce the analysis
 
