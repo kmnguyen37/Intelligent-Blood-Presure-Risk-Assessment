@@ -10,9 +10,27 @@ An end-to-end model-reliability and clinical error-profile study using NHANES 20
 
 - **[Portfolio notebook](notebook/02-portfolio-notebook-reframed-reliability.ipynb):** concise, hiring-manager-friendly reliability study
 - **[Full technical notebook](notebook/01-project-notebook-reframed-reliability.ipynb):** expanded EDA, statistical diagnostics, tuning, range-specific error analysis, and SHAP failure investigation
+- **[Model card](docs/Model_Card.md):** intended use, training population, performance by SBP range, and known failure modes
 - **[Deployment roadmap](roadmap.md):** implications of the reliability findings and requirements beyond this benchmark
 
-The original notebooks remain unchanged as a record of the earlier project framing.
+The original (pre-reframing) notebooks are preserved unchanged in [`notebook/archive/`](notebook/archive/) as a record of the earlier project framing.
+
+## Reproducible pipeline and demo
+
+Track 1 of the roadmap (portfolio-demo deployment) is implemented in `src/`, `tests/`, and `app.py`:
+
+```bash
+source bp-risk-env/bin/activate
+pip install -r requirements-app.txt   # streamlit, pytest, joblib, etc. — on top of requirements.txt
+python -m src.train                   # rebuilds the cohort and retrains the pipeline
+pytest                                # runs the automated test suite
+streamlit run app.py                  # launches the nonclinical demo UI
+```
+
+`src/data.py`, `src/pipeline.py`, and `src/train.py` reproduce the exact preprocessing and
+Random Forest configuration selected in the technical notebook as reusable, tested code rather
+than notebook cells — see [`docs/Model_Card.md`](docs/Model_Card.md) for the resulting artifact's
+intended use and known failure modes.
 
 ## Study design
 

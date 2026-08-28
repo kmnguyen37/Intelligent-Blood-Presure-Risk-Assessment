@@ -23,19 +23,19 @@ The project therefore has two distinct deployment tracks:
 
 ### 2. Create a reproducible training pipeline
 
-- Move preprocessing and model training into reusable Python functions.
-- Use a scikit-learn `Pipeline` for preprocessing and prediction.
-- Save the complete preprocessing-plus-model artifact.
-- Lock dependency versions.
-- Validate the prediction input schema.
+- [x] Move preprocessing and model training into reusable Python functions (`src/data.py`, `src/pipeline.py`, `src/train.py`).
+- [x] Use a scikit-learn `Pipeline` for preprocessing and prediction.
+- [x] Save the complete preprocessing-plus-model artifact (`models/rf_sbp_pipeline.joblib`).
+- [x] Lock dependency versions (`requirements-app.txt`).
+- [x] Validate the prediction input schema (`src/schema.py`).
 
 ### 3. Build a demonstration interface
 
-- Create a simple Streamlit application or FastAPI endpoint.
-- Accept age, BMI, sex, and diabetes status as inputs.
-- Return predicted SBP with clear limitations and appropriate uncertainty information.
-- Use synthetic demonstration inputs only.
-- Do not describe the result as a diagnosis or clinical recommendation.
+- [x] Create a simple Streamlit application (`app.py`).
+- [x] Accept age, BMI, sex, and diabetes status as inputs.
+- [x] Return predicted SBP with clear limitations and appropriate uncertainty information (high-SBP-range warning tied directly to the reliability finding).
+- [x] Use synthetic demonstration inputs only.
+- [x] Do not describe the result as a diagnosis or clinical recommendation (disclaimer rendered on every prediction).
 
 Recommended disclaimer:
 
@@ -43,21 +43,21 @@ Recommended disclaimer:
 
 ### 4. Add automated tests
 
-- Confirm valid inputs produce predictions.
-- Reject invalid ages, BMI values, and categories.
-- Handle missing inputs predictably.
-- Confirm encoded feature order remains correct.
-- Confirm a saved and reloaded pipeline reproduces expected predictions.
+- [x] Confirm valid inputs produce predictions (`tests/test_pipeline.py`, `tests/test_predict.py`).
+- [x] Reject invalid ages, BMI values, and categories (`tests/test_schema.py`).
+- [x] Handle missing inputs predictably (`tests/test_schema.py`).
+- [x] Confirm encoded feature order remains correct (`tests/test_pipeline.py`).
+- [x] Confirm a saved and reloaded pipeline reproduces expected predictions (`tests/test_predict.py`).
 
 ### 5. Add professional documentation
 
-- Model card
-- Intended use and prohibited uses
-- Training population
-- Overall and subgroup performance
-- Known failure modes
-- Reproduction and installation instructions
-- Application screenshot or demonstration video
+- [x] Model card (`docs/Model_Card.md`)
+- [x] Intended use and prohibited uses
+- [x] Training population
+- [x] Overall and subgroup performance
+- [x] Known failure modes
+- [x] Reproduction and installation instructions
+- [ ] Application screenshot or demonstration video
 
 ## Track 2: Clinical-Readiness Development
 

@@ -1,0 +1,15 @@
+# Dependencies for the reproducible pipeline, tests, and demo app
+# (src/, tests/, app.py) — separate from requirements.txt, which pins the
+# full notebook/Jupyter environment used for the exploratory analysis.
+#
+# Install into the existing project environment:
+#   source bp-risk-env/bin/activate
+#   pip install -r requirements-app.txt
+
+pandas>=3.0.3
+numpy>=2.4.6
+scikit-learn>=1.9.0
+joblib>=1.5.3
+requests>=2.32
+streamlit>=1.38
+pytest>=8.3

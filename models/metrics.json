@@ -1,0 +1,47 @@
+{
+  "overall": {
+    "n_train": 8205,
+    "n_test": 2052,
+    "test_r2": 0.3716,
+    "test_mae": 11.18,
+    "test_rmse": 15.35
+  },
+  "reliability_by_sbp_range": [
+    {
+      "range": "<100",
+      "n_participants": 249,
+      "mean_residual": -13.25,
+      "mae": 13.27,
+      "rmse": 16.72
+    },
+    {
+      "range": "100-119",
+      "n_participants": 945,
+      "mean_residual": -6.35,
+      "mae": 9.09,
+      "rmse": 11.94
+    },
+    {
+      "range": "120-139",
+      "n_participants": 564,
+      "mean_residual": 3.21,
+      "mae": 7.16,
+      "rmse": 9.02
+    },
+    {
+      "range": "140-159",
+      "n_participants": 213,
+      "mean_residual": 17.35,
+      "mae": 17.43,
+      "rmse": 19.2
+    },
+    {
+      "range": "160+",
+      "n_participants": 81,
+      "mean_residual": 40.75,
+      "mae": 40.75,
+      "rmse": 43.67
+    }
+  ],
+  "note": "Near-zero aggregate error can conceal severe range-specific bias. See reliability_by_sbp_range, especially the 160+ row, before treating overall R2/MAE/RMSE as evidence of clinical usefulness."
+}
