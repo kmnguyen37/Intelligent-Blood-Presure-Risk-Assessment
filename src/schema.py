@@ -12,10 +12,11 @@ from dataclasses import dataclass
 
 from src.data import DIABETES_CATEGORIES, SEX_CATEGORIES
 
-MIN_AGE, MAX_AGE = 8, 100  # matches DE006: the training cohort is aged >= 8;
-# NHANES top-codes age at 80 (see notebook Discussion, "top-coding" note), so
-# predictions above ~80 extrapolate beyond any observed training age.
-MIN_BMI, MAX_BMI = 12.0, 85.0  # observed training range was 12.5-80.6 kg/m^2
+MIN_AGE, MAX_AGE = 8, 80
+# NHANES top-codes age at 80. An input of 80 therefore represents the source
+# category "80 or older"; accepting larger values would imply unsupported age
+# resolution that is absent from the training data.
+MIN_BMI, MAX_BMI = 12.5, 80.6  # observed complete-case training range (kg/m^2)
 
 
 class ValidationError(ValueError):
@@ -43,8 +44,7 @@ def validate_request(age_years, bmi, sex, diabetes_status) -> SBPRequest:
         raise ValidationError(
             f"age_years must be between {MIN_AGE} and {MAX_AGE}; got {age_years}. "
             "The training cohort excluded participants younger than 8, and NHANES "
-            "top-codes age at 80, so predictions outside this range are unreliable "
-            "or extrapolated."
+            "top-codes age at 80. Use 80 for the source category '80 or older'."
         )
 
     try:

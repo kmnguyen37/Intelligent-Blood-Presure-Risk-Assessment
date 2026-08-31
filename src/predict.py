@@ -31,6 +31,13 @@ DISCLAIMER = (
     "never be treated as a substitute for a direct blood-pressure measurement."
 )
 
+RELIABILITY_WARNING = (
+    "The model compresses estimates toward the center of the observed SBP "
+    "distribution. An individual prediction cannot identify which observed-SBP "
+    "error range a person belongs to and must not be treated as a lower bound, "
+    "upper bound, or substitute for direct measurement."
+)
+
 
 class ModelNotFoundError(FileNotFoundError):
     """Raised when the trained pipeline artifact has not been built yet."""
@@ -39,8 +46,8 @@ class ModelNotFoundError(FileNotFoundError):
 @dataclass(frozen=True)
 class SBPPrediction:
     predicted_sbp: float
-    high_range_warning: bool
     disclaimer: str = DISCLAIMER
+    reliability_warning: str = RELIABILITY_WARNING
 
 
 @lru_cache(maxsize=1)
@@ -76,12 +83,6 @@ def predict_sbp(
     )
     predicted = float(pipeline.predict(row)[0])
 
-    # The reliability study found systematic underprediction at high observed
-    # SBP; a high *predicted* value is therefore, if anything, an
-    # underestimate of the true likely range, not an overestimate.
-    high_range_warning = predicted >= 140
-
     return SBPPrediction(
         predicted_sbp=round(predicted, 1),
-        high_range_warning=high_range_warning,
     )

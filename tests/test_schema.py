@@ -19,13 +19,13 @@ def test_coerces_numeric_strings():
     assert req.bmi == 27.5
 
 
-@pytest.mark.parametrize("age", [-1, 7, 101, 500])
+@pytest.mark.parametrize("age", [-1, 7, 80.1, 101, 500])
 def test_rejects_invalid_age(age):
     with pytest.raises(ValidationError):
         validate_request(age_years=age, bmi=27.5, sex="Male", diabetes_status="No")
 
 
-@pytest.mark.parametrize("bmi", [-5, 0, 5, 200])
+@pytest.mark.parametrize("bmi", [-5, 0, 12.4, 80.7, 200])
 def test_rejects_invalid_bmi(bmi):
     with pytest.raises(ValidationError):
         validate_request(age_years=40, bmi=bmi, sex="Male", diabetes_status="No")

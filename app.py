@@ -31,8 +31,9 @@ st.markdown(
     "This app runs the Random Forest model documented in "
     "[the reliability study](README.md): it predicts *Average Systolic "
     "Blood Pressure* from age, sex, BMI, and diabetes status alone. The "
-    "study's own finding is that this model is **not reliable at high "
-    "observed SBP** — see the warning below if your inputs land there."
+    "study's own finding is that this model is **not reliable across observed "
+    "SBP ranges**, especially at the high end. The observed range is unknown "
+    "when making a prediction, so every output receives the same warning."
 )
 
 with st.form("prediction_form"):
@@ -66,15 +67,7 @@ if submitted:
         st.error(f"Invalid input: {exc}")
     else:
         st.metric("Predicted Average SBP", f"{result.predicted_sbp} mmHg")
-        if result.high_range_warning:
-            st.error(
-                "This prediction falls in a range where the study found the "
-                "model **systematically underpredicts** observed SBP — by "
-                "roughly 41 mmHg on average for participants at or above "
-                "160 mmHg in the held-out test set. Treat this number as a "
-                "floor, not an estimate, and rely on a direct measurement.",
-                icon="🚨",
-            )
+        st.error(result.reliability_warning, icon="🚨")
         st.caption(result.disclaimer)
 
 st.divider()

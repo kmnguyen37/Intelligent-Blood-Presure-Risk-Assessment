@@ -32,6 +32,11 @@ Random Forest configuration selected in the technical notebook as reusable, test
 than notebook cells — see [`docs/Model_Card.md`](docs/Model_Card.md) for the resulting artifact's
 intended use and known failure modes.
 
+The demo accepts only inputs within the documented training support (age 8 through the
+NHANES top-coded `80+` category and BMI 12.5–80.6 kg/m²). Every illustrative prediction
+receives the same reliability warning: an inference-time prediction cannot reveal which
+observed-SBP error range a person belongs to, and it is not a lower or upper bound.
+
 ## Study design
 
 - **Population:** NHANES participants aged 8 years or older with measured SBP

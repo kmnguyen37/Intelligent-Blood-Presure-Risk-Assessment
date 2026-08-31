@@ -28,6 +28,7 @@ def test_predict_sbp_returns_prediction_with_disclaimer(saved_artifact_path):
     )
     assert isinstance(result.predicted_sbp, float)
     assert "not validated for clinical use" in result.disclaimer
+    assert "cannot identify which observed-SBP error range" in result.reliability_warning
 
 
 def test_reloaded_pipeline_matches_in_memory_pipeline(saved_artifact_path, fitted_pipeline):
@@ -45,15 +46,16 @@ def test_reloaded_pipeline_matches_in_memory_pipeline(saved_artifact_path, fitte
     assert result.predicted_sbp == round(direct, 1)
 
 
-def test_high_prediction_sets_warning_flag(saved_artifact_path):
-    # A 90-year-old (extrapolated) with high BMI and diabetes should push
-    # the synthetic model's prediction into the high range.
-    result = predict_sbp(
-        age_years=95, bmi=80, sex="Male", diabetes_status="Yes",
-        artifact_path=saved_artifact_path,
-    )
-    if result.predicted_sbp >= 140:
-        assert result.high_range_warning is True
+@pytest.mark.parametrize(
+    "prediction_input",
+    [
+        dict(age_years=20, bmi=18, sex="Female", diabetes_status="No"),
+        dict(age_years=80, bmi=80.6, sex="Male", diabetes_status="Yes"),
+    ],
+)
+def test_every_prediction_has_same_reliability_warning(saved_artifact_path, prediction_input):
+    result = predict_sbp(**prediction_input, artifact_path=saved_artifact_path)
+    assert result.reliability_warning == predict_module.RELIABILITY_WARNING
 
 
 def test_missing_artifact_raises_clear_error(tmp_path):
