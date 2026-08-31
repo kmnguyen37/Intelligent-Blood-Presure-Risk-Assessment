@@ -85,6 +85,8 @@ Residual is defined as actual minus predicted SBP. Negative values indicate over
 
 These findings explain the fitted model; they are not causal conclusions.
 
+**Follow-up test:** does a richer feature set close the gap? Smoking status, physical activity, alcohol use, serum creatinine, and HbA1c were added and evaluated on a same-subsample basis (age ≥ 18, n = 7,146; results compared against a baseline refit on the identical population and split — see [`docs/Decision_log.md`](docs/Decision_log.md), P2-DS001–P2-M002). The answer is no: held-out R² moved by +0.0024 and the 160+ mmHg underprediction moved by −0.39 mmHg, both negligible, and permutation importance still ranks age roughly an order of magnitude above every added feature. This is evidence, not just assertion, that the reliability ceiling is not primarily a "too few features" problem.
+
 ## Deployment recommendation
 
 Do not deploy this model for diagnosis, treatment, triage, risk communication, or patient-care decisions. Direct BP measurement remains preferable whenever available. The current model is appropriate only as a transparent, nonclinical benchmark or a clearly labeled educational demonstration using synthetic inputs.

@@ -1,0 +1,148 @@
+{
+  "same_subsample_comparison": {
+    "baseline_v1_features_adult_subsample": {
+      "label": "v1_features_on_adult_subsample (age/BMI/sex/diabetes, age>=18, n=7146)",
+      "n_train": 5716,
+      "n_test": 1430,
+      "test_r2": 0.226,
+      "test_mae": 12.62,
+      "test_rmse": 16.81,
+      "reliability_by_sbp_range": [
+        {
+          "range": "<100",
+          "n_participants": 100,
+          "mean_residual": -18.66,
+          "mae": 18.66,
+          "rmse": 21.44
+        },
+        {
+          "range": "100-119",
+          "n_participants": 564,
+          "mean_residual": -10.15,
+          "mae": 11.53,
+          "rmse": 14.19
+        },
+        {
+          "range": "120-139",
+          "n_participants": 512,
+          "mean_residual": 1.85,
+          "mae": 6.82,
+          "rmse": 8.68
+        },
+        {
+          "range": "140-159",
+          "n_participants": 183,
+          "mean_residual": 17.67,
+          "mae": 17.67,
+          "rmse": 19.55
+        },
+        {
+          "range": "160+",
+          "n_participants": 71,
+          "mean_residual": 41.53,
+          "mae": 41.53,
+          "rmse": 43.78
+        }
+      ]
+    },
+    "richer_v2_features": {
+      "label": "v2_richer_features (+smoking/activity/alcohol/creatinine/HbA1c, age>=18, n=7146)",
+      "n_train": 5716,
+      "n_test": 1430,
+      "test_r2": 0.2284,
+      "test_mae": 12.61,
+      "test_rmse": 16.78,
+      "reliability_by_sbp_range": [
+        {
+          "range": "<100",
+          "n_participants": 100,
+          "mean_residual": -18.72,
+          "mae": 18.72,
+          "rmse": 21.5
+        },
+        {
+          "range": "100-119",
+          "n_participants": 564,
+          "mean_residual": -10.13,
+          "mae": 11.48,
+          "rmse": 14.15
+        },
+        {
+          "range": "120-139",
+          "n_participants": 512,
+          "mean_residual": 1.84,
+          "mae": 6.85,
+          "rmse": 8.68
+        },
+        {
+          "range": "140-159",
+          "n_participants": 183,
+          "mean_residual": 17.75,
+          "mae": 17.8,
+          "rmse": 19.65
+        },
+        {
+          "range": "160+",
+          "n_participants": 71,
+          "mean_residual": 41.14,
+          "mae": 41.14,
+          "rmse": 43.5
+        }
+      ]
+    },
+    "delta_160plus_bucket": {
+      "baseline_mean_residual": 41.53,
+      "v2_mean_residual": 41.14,
+      "baseline_mae": 41.53,
+      "v2_mae": 41.14
+    }
+  },
+  "published_v1_for_reference_only": {
+    "overall": {
+      "n_train": 8205,
+      "n_test": 2052,
+      "test_r2": 0.3716,
+      "test_mae": 11.18,
+      "test_rmse": 15.35
+    },
+    "reliability_by_sbp_range": [
+      {
+        "range": "<100",
+        "n_participants": 249,
+        "mean_residual": -13.25,
+        "mae": 13.27,
+        "rmse": 16.72
+      },
+      {
+        "range": "100-119",
+        "n_participants": 945,
+        "mean_residual": -6.35,
+        "mae": 9.09,
+        "rmse": 11.94
+      },
+      {
+        "range": "120-139",
+        "n_participants": 564,
+        "mean_residual": 3.21,
+        "mae": 7.16,
+        "rmse": 9.02
+      },
+      {
+        "range": "140-159",
+        "n_participants": 213,
+        "mean_residual": 17.35,
+        "mae": 17.43,
+        "rmse": 19.2
+      },
+      {
+        "range": "160+",
+        "n_participants": 81,
+        "mean_residual": 40.75,
+        "mae": 40.75,
+        "rmse": 43.67
+      }
+    ],
+    "note": "Near-zero aggregate error can conceal severe range-specific bias. See reliability_by_sbp_range, especially the 160+ row, before treating overall R2/MAE/RMSE as evidence of clinical usefulness."
+  },
+  "note": "Only compare baseline_v1_features_adult_subsample against richer_v2_features directly - both use the identical age>=18, complete-case population and the identical train/test split. published_v1_for_reference_only used a different (age>=8, full complete-case) population and is not a valid ablation baseline for this experiment; see the module docstring."
+}

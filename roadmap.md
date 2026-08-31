@@ -76,8 +76,8 @@ A potentially more defensible future use case may be identifying people who need
 
 ### 2. Improve the data and model
 
+- [x] Add relevant clinical, behavioral, and lab predictors — **tested, did not close the gap.** Smoking status, physical activity, alcohol use, serum creatinine, and HbA1c were added on a same-subsample basis (age ≥ 18, n = 7,146) against a baseline refit on the identical population and split. Held-out R² moved by +0.0024 and the 160+ mmHg bucket's mean underprediction moved by −0.39 mmHg — not clinically or statistically meaningful. Age still dominates permutation importance by roughly an order of magnitude over every added feature. See `docs/Decision_log.md` P2-DS001–P2-M002 for the full design and results, and `models/metrics_v2.json` for the raw numbers. This closes off "add more NHANES exam/questionnaire variables" as a promising path without new evidence; the more likely next lever is a different *kind* of data (longitudinal BP history, direct hemodynamic measurement, genetic/familial risk) rather than more items from a single cross-sectional exam.
 - Quantify the number of valid SBP readings per participant and test minimum-reading requirements.
-- Add relevant clinical, behavioral, medication, and social predictors.
 - Consider separate pediatric and adult models or clearly defined populations.
 - Validate temporally using another NHANES cycle.
 - Validate externally using data from the intended health system.

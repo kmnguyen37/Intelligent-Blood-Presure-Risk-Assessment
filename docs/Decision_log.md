@@ -526,6 +526,174 @@ Reason:
 
 ⸻
 
+PHASE 2 — RICHER-PREDICTOR SENSITIVITY EXPERIMENT
+
+Context
+
+roadmap.md Track 2 ("Improve the data and model") lists "add relevant
+clinical, behavioral, medication, and social predictors" as a candidate next
+step toward closing the range-specific reliability gap documented in
+README.md. This experiment tests that specific candidate rather than
+assuming it would help.
+
+P2-DS001 — Additional NHANES Components and Population Restriction
+
+Status: Approved
+
+Decision
+
+Evaluate five additional NHANES 2017-March 2020 predictors: current smoking
+status (P_SMQ), vigorous recreational physical activity (P_PAQ), any lifetime
+alcohol use (P_ALQ), serum creatinine (P_BIOPRO), and glycohemoglobin/HbA1c
+(P_GHB). Restrict the Phase 2 cohort to participants aged 18 and older.
+
+Rationale
+
+* SMQ020/SMQ040, PAQ650, and ALQ111 are structurally 100% missing for
+  participants under 18 in this NHANES cycle (not administered to that age
+  group) - confirmed by direct inspection of the raw extracts before writing
+  any merge code.
+* LBXSCR and LBXGH (blood-draw labs) are missing for 56-58% of ages 8-17
+  versus 13-15% of adults - retaining children would have meant imputing or
+  discarding most of the pediatric sample regardless.
+* This mirrors the M003 precedent (BP-medication sensitivity model on a
+  restricted subsample) rather than the primary model's population.
+
+Impact
+
+The Phase 2 complete-case cohort is 7,146 participants (age >= 18), versus
+10,257 (age >= 8) for Version 1. Because the population differs, Version 1's
+published metrics (models/metrics.json) cannot be directly compared against
+a model fit on the Phase 2 cohort - see P2-M001.
+
+⸻
+
+P2-FE001 — Feature Approval: Current Smoking Status
+
+Status: Approved. SMQ020 ("smoked >=100 cigarettes lifetime") and SMQ040
+("do you now smoke") are combined into one current_smoker_label (Yes/No)
+feature, since SMQ040 is only asked when SMQ020 == 1. Clinical rationale:
+smoking is an established cardiovascular/BP risk correlate. Approved under
+FE001's five-part framework on clinical plausibility; its actual information
+contribution is evaluated empirically, not assumed (see P2-M002).
+
+P2-FE002 — Feature Approval: Vigorous Recreational Physical Activity
+
+Status: Approved. PAQ650 (Yes/No) used as-is. Clinical rationale: physical
+activity is an established BP correlate.
+
+P2-FE003 — Feature Approval: Alcohol Use
+
+Status: Approved. ALQ111 ("ever had a drink of any kind of alcohol", Yes/No)
+used as-is.
+
+P2-FE004 — Feature Approval: Serum Creatinine
+
+Status: Approved. LBXSCR (mg/dL) used as a continuous kidney-function proxy.
+Clinical rationale: renal function is mechanistically linked to blood-
+pressure regulation (renin-angiotensin-aldosterone system) more directly
+than any Version-1 predictor.
+
+P2-FE005 — Feature Approval: Glycohemoglobin (HbA1c)
+
+Status: Approved. LBXGH (%) used as a continuous glycemic-control measure,
+in addition to (not replacing) the existing categorical DIQ010 diabetes
+status, since it carries information a No/Borderline/Yes categorical cannot
+(degree of control, undiagnosed hyperglycemia).
+
+⸻
+
+P2-M001 — Same-Subsample Ablation Design
+
+Status: Approved
+
+Decision
+
+Do not compare a Phase 2 model against the published Version-1 metrics
+directly. Instead fit two models on the identical age >= 18,
+complete-case-on-all-Phase-2-features population and the identical
+train/test split (random_state=42):
+
+1. baseline_v1_features_adult_subsample - age, BMI, sex, diabetes only
+   (the Version-1 feature set, re-fit on the Phase 2 population)
+2. richer_v2_features - baseline features + smoking, activity, alcohol,
+   creatinine, HbA1c
+
+Rationale
+
+Comparing a richer-feature model fit on adults against the published
+Version-1 model fit on ages 8+ would confound two changes at once: added
+predictors AND a different, older population. Only the two same-subsample
+models isolate the effect of the added predictors. Implemented in
+src/train_v2.py; both models use src/pipeline.py's unchanged RF_PARAMS so
+that hyperparameters are not a third confounding variable.
+
+⸻
+
+P2-M002 — Result: Added Predictors Do Not Close the Reliability Gap
+
+Status: Recorded, 2026-08-31 (python -m src.train_v2)
+
+Result
+
+| Model | n | Test R² | Test MAE | 160+ mean residual | 160+ MAE |
+|---|---:|---:|---:|---:|---:|
+| baseline_v1_features_adult_subsample | 7,146 | 0.226 | 12.62 | 41.53 | 41.53 |
+| richer_v2_features | 7,146 | 0.228 | 12.61 | 41.14 | 41.14 |
+
+Adding smoking status, physical activity, alcohol use, creatinine, and HbA1c
+moved held-out R² by +0.0024, MAE by -0.01 mmHg, and the 160+ mmHg bucket's
+mean underprediction by -0.39 mmHg. Permutation importance on the richer
+model (n_repeats=15, scoring=r2) ranks the five added features far below
+age and even below BMI:
+
+| Feature | Mean R² drop when permuted |
+|---|---:|
+| RIDAGEYR (age) | 0.4133 |
+| RIAGENDR_label (sex) | 0.0559 |
+| BMXBMI | 0.0120 |
+| LBXSCR (creatinine) | 0.0045 |
+| LBXGH (HbA1c) | 0.0015 |
+| PAQ650_label (activity) | 0.0002 |
+| current_smoker_label | 0.0002 |
+| ALQ111_label (alcohol) | -0.0001 |
+| DIQ010_label (diabetes) | -0.0003 |
+
+Separately, note that restricting the *same* four Version-1 features to the
+adult-only Phase 2 population drops R² from 0.372 (age >= 8) to 0.226
+(age >= 18) - most of Version 1's apparent explanatory power comes from age
+tracking SBP over childhood/adolescent growth, not from a genuinely strong
+age-BMI-sex-diabetes relationship among adults.
+
+Interpretation
+
+This is a negative result and is retained as evidence, not discarded. It
+indicates the Version-1 reliability ceiling - and specifically the high-SBP
+underprediction reported in README.md - is not primarily an artifact of a
+too-narrow feature set. Adding five more clinically plausible predictors,
+including two lab values, left the 160+ bucket's ~41 mmHg average
+underprediction essentially unchanged. Closing that gap likely requires
+predictor types absent from a single cross-sectional NHANES exam entirely
+(e.g., longitudinal BP history, direct hemodynamic measurement, genetic or
+familial risk) rather than more items from the same kind of data source.
+
+Impact
+
+* Do not present richer demographic/behavioral/lab predictors as a
+  promising near-term path to clinical readiness without new evidence.
+* roadmap.md Track 2's "improve the data and model" item is updated to
+  reflect this tested result rather than an open question.
+* README.md's core reliability finding is unaffected and is not
+  contradicted by this experiment - if anything it is reinforced by an
+  additional, independent line of evidence.
+* Artifacts: src/train_v2.py, src/pipeline.build_pipeline_v2(),
+  src/data.build_ml_dataset_v2() / build_ml_dataset_v1_features_adult_subsample(),
+  models/rf_sbp_pipeline_v2.joblib, models/metrics_v2.json,
+  tests/test_pipeline_v2.py. None of these replace or alter the deployed
+  Version-1 pipeline (models/rf_sbp_pipeline.joblib) or app.py.
+
+⸻
+
 Engineering Decisions
 
 E001 — Repository Development
