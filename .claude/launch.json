@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "sbp-streamlit-demo",
+      "runtimeExecutable": "/Users/iris/Documents/GitHub/SBP-ML-Reliability-Study/bp-risk-env/bin/python",
+      "runtimeArgs": ["-m", "streamlit", "run", "app.py", "--server.headless", "true"],
+      "port": 8501
+    }
+  ]
+}

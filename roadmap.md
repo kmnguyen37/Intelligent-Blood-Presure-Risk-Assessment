@@ -57,7 +57,7 @@ Recommended disclaimer:
 - [x] Overall and subgroup performance
 - [x] Known failure modes
 - [x] Reproduction and installation instructions
-- [ ] Application screenshot or demonstration video
+- [x] Application screenshot or demonstration video (`Figures/Demo_app.png`, embedded in `README.md`)
 
 ## Track 2: Clinical-Readiness Development
 
